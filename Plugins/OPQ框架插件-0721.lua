@@ -63,12 +63,8 @@ end
                     log.info("\n开始拉取图片Url")
 local setu_json = setu(1, 0)
                 local img_url = setu_json["url"]
-             log.info("\n"..img_url.."By：泠夜Soul")
-                if num==1 then
-                    action:sendGroupText(data.FromGroupId,"施法材料链接："..img_url.."\n防止逆天不出施法材料~")
-                    else
-                  action:sendGroupUrlPic(data.FromGroupId, img_url,"运气不错呢，抽中了可以发的施法材料！")
-               end
+             log.info("\n"..img_url.."By：泠夜Soul")           
+                  action:sendGroupUrlPic(data.FromGroupId, img_url)
                 flag=false
                 end
 else
