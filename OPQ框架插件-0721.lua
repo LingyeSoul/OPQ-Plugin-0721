@@ -5,7 +5,7 @@ local botoy = require("Plugins/lib/botoy")
 local http = botoy.http
 local log = botoy.log
 --By：泠夜Soul
-
+--开源仓库https://github.com/LingyeSoul/OPQ-Plugin-0721/
 
 ReceiveGroupMsg = botoy.group(function(CurrentQQ, data, action)
      allow=getallow()
@@ -19,7 +19,7 @@ if data.Content:find "0721菜单" or data.Content:find "0721帮助" then
       "1.0721命令：先(At机器人)再+ 0721 + {执行，嘲讽}\n"..
       "2.施法材料命令：施法材料\n"..
       "3.来一瓶命令：先(At机器人)再+ 来一瓶\n"
-   .."PS：请无视指令空格，发生错误（无响应,被拦截）很正常（有些消息内容会过于逆天），请勿重复发送命令！！！\nBy：泠夜Soul"
+   .."PS：请无视指令空格，发生错误（无响应,被拦截）很正常（有些消息内容会过于逆天），请勿重复发送命令！！！\nBy：泠夜Soul\n开源仓库https://github.com/LingyeSoul/OPQ-Plugin-0721/"
      action:sendGroupText(data.FromGroupId,menu)
          end
     if data.Content:find "来一瓶" then
