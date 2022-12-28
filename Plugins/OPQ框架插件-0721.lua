@@ -12,13 +12,13 @@ ReceiveGroupMsg = botoy.group(function(CurrentQQ, data, action)
        if CurrentQQ==data.FromUserId then
            else
            if allow:find(data.FromGroupId) then
-        
      if data.MsgType == "AtMsg" then
 if data.Content:find "0721菜单" or data.Content:find "0721帮助" then
          menu =  "0721 Menu \n"..
-      "1.0721命令：先(At机器人)再+ 0721 + {执行，嘲讽}\n"..
+      "1.0721命令：先(At机器人)再+ 0721 \n"..
       "2.施法材料命令：施法材料\n"..
-      "3.来一瓶命令：先(At机器人)再+ 来一瓶\n"
+      "3.来一瓶命令：先(At机器人)再+ 来一瓶\n"..
+      "4.提醒0721命令：先(At机器人)再 + 提醒ON/OFF（仅管理员，勿重复添加）\n"
    .."PS：请无视指令空格，发生错误（无响应,被拦截）很正常（有些消息内容会过于逆天），请勿重复发送命令！！！\nBy：泠夜Soul\n开源仓库https://github.com/LingyeSoul/OPQ-Plugin-0721/"
      action:sendGroupText(data.FromGroupId,menu)
          end
@@ -26,8 +26,32 @@ if data.Content:find "0721菜单" or data.Content:find "0721帮助" then
          log.info("\n正在发送")
      action:sendGroupUrlPic(data.FromGroupId, [[https://gchat.qpic.cn/gchatpic_new/0/0-0-28A04A3AB81D656526F4D64445508852/0]], data.FromNickName.."，你要的一瓶")
     end
+    if admin_qq:find(data.FromUserId) then
+    if data.Content:find "提醒ON" then
+response=Api.Api_AddCrons(
+    {
+        QQ = tostring(CurrentQQ),
+        Sepc = "0 21 7,19 * * ?", 
+        FileName = "0721TimeFunction.lua",
+        FuncName = "Task0721" 
+    })
+log.info("已添加！")
+action:sendGroupText(data.FromGroupId,'已添加!')
+    end
     
-    if data.Content:find "0721执行" then
+    if data.Content:find "提醒任务" then
+task=Api.Api_GetCrons()
+str = string.format("Ret %d Crons %s",task.Ret, task.Crons)
+log.info("Api_GetCrons %s", str)
+action:sendGroupText(data.FromGroupId,str)
+    end
+    
+    if data.Content:find "提醒OFF" then
+        Api.Api_DelCrons(1)--传入任务整数
+action:sendGroupText(data.FromGroupId,'已删除!')
+end
+end
+    if data.Content:find "0721" then
         cact=getrandomact()
          src =  "你正在："..cact
      action:replyGroupMsg(data.FromGroupId,src, data.MsgSeq, data.MsgTime,data.FromUserId,data.Content:match[[Content":"(.-)"]])
